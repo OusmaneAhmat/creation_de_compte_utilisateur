@@ -16,6 +16,7 @@ Action à la validation du formulaire :
 */
 
 // 1) Connexion à la base de données
+
 $serveur = "localhost";
 $utilisateur = "root"; 
 $mot_de_passe = ""; 
@@ -31,19 +32,27 @@ if (!$connexion) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des valeurs des champs du formulaire
     $email = $_POST['email'];
-    $motDePasse = $_POST['motdepasse'];
+    $motdepasse = $_POST['motdepasse'];
 
     // 4) Requête SQL pour vérifier l'existence de l'utilisateur dans la table de compte
-    $sql = "SELECT * FROM compte WHERE email = '$email' AND mot_de_passe = '$motDePasse'";
+    $sql = "SELECT * FROM compte WHERE email = '$email' AND mot_de_passe = '$motdepasse'";
     $resultat = mysqli_query($connexion, $sql);
-
-    header("Location: connexion-compte.php");
-    exit; // Terminer le script après la redirection
-    
-}
+    print_r($resultat);
+    if ($resultat) {
+        print_r($resultat);
+        // echo 'le compte existe';
+        header("Location: accueil-compte.php");
+     
+    } else {
+        echo "Erreur : " ;
+        
+    }
+   
+} 
 // 4) Fermeture de la connexion à la base de données
 mysqli_close($connexion);
 ?>
+
 
 
 
